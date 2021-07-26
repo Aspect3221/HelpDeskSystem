@@ -4,27 +4,28 @@ import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Accounts {
-   
+
     //global variable
     static String userName="Guest";
-    
+
+    //private attributes
+    private String firstName = null;
+    private String lastName = null;
+    private String uName = null;
+    private String password = null;
+    private String email = null;
+    private String skillAndExp = null;
+    private String designation = null;
+    private String department = null;
+    private String accType = null;
+
     //create a account
     public void createAccount () {
 
         //variables
-        int choise=0;
-        String fName=null;
-        String lName=null;
-        String uName=null;
-        String email=null;
-        String sklexp=null;
-        String dsgntn=null;
-        String dptmnt=null;
-        String psswd=null;
-        String cnfmPsswd=null;
+        int choice=0;
 
-        //objects
-        File userFile = new File("Users/"+uName+".txt");
+        String cnfmPsswd=null;
 
         //menu
         System.out.println("Choose from the menu below: ");
@@ -32,57 +33,46 @@ public class Accounts {
         System.out.println("(2) Create a account for technician");
 
         //taking inputs
-        while (choise!=1&&choise!=2) {
+        boolean finished = false;
+        while (!finished) {
             Misc.prompt("/");
-            choise = Misc.input.nextInt(); Misc.input.nextLine();
-            switch (choise) {
+            choice = Misc.input.nextInt(); Misc.input.nextLine();
+            switch (choice) {
                 case 1:
                     System.out.print("First Name: ");
-                    fName = Misc.input.nextLine();
+                    firstName = Misc.input.nextLine();
                     System.out.print("Last Name: ");
-                    lName = Misc.input.nextLine();
-                    while (uName==null||userFile.exists()) {
-                        System.out.print("User Name: ");
-                        uName = Misc.input.nextLine();
-                        userFile = new File("Users/"+uName+".txt");
-                        if (userFile.exists()) {
-                            System.out.println("'"+uName+"' - This user name is already taken... choose another!! ");
-                        }
-                    }
+                    lastName = Misc.input.nextLine();
+                    checkUsername();
                     System.out.print("Email: ");
                     email = Misc.input.nextLine();
                     System.out.print("Designation: ");
-                    dsgntn = Misc.input.nextLine();
+                    designation = Misc.input.nextLine();
                     System.out.print("Department: ");
-                    dptmnt = Misc.input.nextLine();
-                break;
+                    department = Misc.input.nextLine();
+                    finished = true;
+                    break;
                 case 2:
                     System.out.print("First Name: ");
-                    fName = Misc.input.nextLine();
+                    firstName = Misc.input.nextLine();
                     System.out.print("Last Name: ");
-                    lName = Misc.input.nextLine();
-                    while (uName==null||userFile.exists()) {
-                        System.out.print("User Name: ");
-                        uName = Misc.input.nextLine();
-                        userFile = new File("Users/"+uName+".txt");
-                        if (userFile.exists()) {
-                            System.out.println("'"+uName+"' - This user name is already taken... choose another!! ");
-                        }
-                    }
+                    lastName = Misc.input.nextLine();
+                    checkUsername();
                     System.out.print("Skill and experience: ");
-                    sklexp = Misc.input.nextLine();                  
-                break;
+                    skillAndExp = Misc.input.nextLine();
+                    finished = true;
+                    break;
                 default:
-                    System.out.println("'"+choise+"' is not a choise from the menu... please choose a choise from the menu!!");
-                break;
+                    System.out.println("'"+choice+"' is not a choice from the menu... please choose a choice from the menu!!");
+                    break;
             }
         }
-        while (psswd==null||psswd!=cnfmPsswd) {
+        while (password == null|| !password.equals(cnfmPsswd)) {
             System.out.print("Password: ");
-            psswd = Misc.input.nextLine().intern();
+            password = Misc.input.nextLine().intern();
             System.out.print("Confirm Password: ");
             cnfmPsswd = Misc.input.nextLine().intern();
-            if (psswd!=cnfmPsswd) {
+            if (!password.equals(cnfmPsswd)) {
                 System.out.println("Your password and confirm password didn't match... Please try again");
             }
         }
@@ -95,26 +85,26 @@ public class Accounts {
             bWriter.newLine();
             bWriter.write("-----------------");
             bWriter.newLine();
-            bWriter.write("First Name: "+fName);
+            bWriter.write("First Name: "+firstName);
             bWriter.newLine();
-            bWriter.write("Last Name: "+lName);
+            bWriter.write("Last Name: "+lastName);
             bWriter.newLine();
             bWriter.write("User Name: "+uName);
             bWriter.newLine();
-            bWriter.write("Password: "+psswd);
+            bWriter.write("Password: "+password);
             bWriter.newLine();
-            if (choise==1) {
+            if (choice==1) {
                 bWriter.write("Account Type: Client");
                 bWriter.newLine();
                 bWriter.write("Email: "+email);
                 bWriter.newLine();
-                bWriter.write("Designation: "+dsgntn);
+                bWriter.write("Designation: "+designation);
                 bWriter.newLine();
-                bWriter.write("Department: "+dptmnt);            
+                bWriter.write("Department: "+department);
             } else {
                 bWriter.write("Account Type: Technician");
                 bWriter.newLine();
-                bWriter.write("skill and experience: "+sklexp);                
+                bWriter.write("skill and experience: "+skillAndExp);
             }
             bWriter.close();
             System.out.println("User account sucessfully created");
@@ -125,26 +115,42 @@ public class Accounts {
 
     }
 
+    //method to check whether a username exists
+    public void checkUsername() {
+        File userFile = new File("Users/"+uName+".txt");
+
+        while (uName==null||userFile.exists()) {
+            System.out.print("User Name: ");
+            uName = Misc.input.nextLine();
+            userFile = new File("Users/"+uName+".txt");
+            if (userFile.exists()) {
+                System.out.println("'"+uName+"' - This user name is already taken... choose another!! ");
+            }
+        }
+    }
+
     //login to your account
     public void logIn () {
 
         //variables
-        String Uname=null;
-        String psswd=null;
         String rpsswd=null;
-        String accType=null;
 
         //objects
-        File userFile = new File("Users/"+Uname+".txt");
+        File userFile = new File("Users/"+uName+".txt");
         Desk desk = new Desk();
 
         //validating user name
-        while (userFile.exists()==false) {
-            System.out.print("User Name: ");
-            Uname=Misc.input.nextLine();
-            userFile = new File("Users/"+Uname+".txt");
-            if (userFile.exists()==false) {
-                System.out.println("'"+Uname+"' - this user doesn't exists in the database");
+        boolean exists = false;
+
+        while (!exists) {
+            System.out.println("User Name: ");
+            uName = Misc.input.nextLine();
+            userFile = new File("Users/"+ uName +".txt");
+
+            if (!userFile.exists()) {
+                System.out.println("'"+ uName +"' - this user doesn't exists in the database");
+            } else {
+                exists = true;
             }
         }
 
@@ -154,25 +160,30 @@ public class Accounts {
             for (int i = 0; i < 5; i++) {
                 fileScanner.nextLine();
             }
-            rpsswd=fileScanner.nextLine().substring(10).intern();
-            accType=fileScanner.nextLine().substring(14).intern();
+            rpsswd = fileScanner.nextLine().substring(10).intern();
+            accType = fileScanner.nextLine().substring(14).intern();
             fileScanner.close();
         } catch (Exception e) {
-            System.out.println("An unknown error has occured... Please try again later!! ");
+            System.out.println("An unknown error has occurred... Please try again later!! ");
         }
 
         //verify the password
-        while (psswd==null||psswd!=rpsswd) {
+        boolean passwordVerified = false;
+
+        while (!passwordVerified) {
             System.out.print("Password: ");
-            psswd=Misc.input.nextLine().intern();
-            if (psswd!=rpsswd) {
-                System.out.println("The password you enter is wrong!! check again... ");
+            password = Misc.input.nextLine().intern();
+            if (!password.equals(rpsswd)) {
+                System.out.println("The password you entered is wrong!! check again... ");
+            } else {
+                passwordVerified = true;
             }
         }
 
         //change user name and forward to the desk
-        userName=Uname;
-        if (accType=="Client") {
+        userName = uName;
+
+        if ("Client".equals(accType)) {
             desk.clientDesk();
         } else {
             desk.techDesk();
@@ -186,7 +197,7 @@ public class Accounts {
 
     //delete the user account
     public void deleteAccount () {
-        
+
         //objects
         File userFile = new File("Users/"+userName+".txt");
 
@@ -194,7 +205,7 @@ public class Accounts {
         if (userFile.delete()) {
             System.out.println("user account has been successfully deleted");
         } else {
-            System.out.println("An unknown error has occured!! Please login and try again... ");
+            System.out.println("An unknown error has occurred!! Please login and try again... ");
         }
         Misc.sleep(2);
 

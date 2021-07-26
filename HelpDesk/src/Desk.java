@@ -1,16 +1,18 @@
+import java.util.Objects;
+
 public class Desk {
-    
+
 
     //startup desk with a guest user
     public void startup () {
 
         //variables
-        int choise=0;
+        int choice=0;
 
         //objects
         Accounts acc = new Accounts();
 
-        while (choise!=3) {
+        while (choice!=3) {
             //clear the console
             Misc.clearScreen();
 
@@ -21,23 +23,23 @@ public class Desk {
 
             //take input
             Misc.prompt("/");
-            choise=Misc.input.nextInt(); Misc.input.nextLine();
+            choice=Misc.input.nextInt(); Misc.input.nextLine();
 
             //take decision according to the input
-            switch (choise) {
+            switch (choice) {
                 case 1:
                     acc.logIn();
-                break;
+                    break;
                 case 2:
                     acc.createAccount();
-                break;
+                    break;
                 case 3:
                     Misc.clearScreen();
-                break;
+                    break;
                 default:
-                    System.out.println("'"+choise+"' is not a choise from the main menu... please choose a choise from the menu!!");
+                    System.out.println("'"+choice+"' is not a choice from the main menu... please choose a choice from the menu!!");
                     Misc.sleep(1);
-                break;
+                    break;
             }
         }
 
@@ -47,14 +49,15 @@ public class Desk {
     public void clientDesk () {
 
         //variables
-        int choise=0;
+        int choice;
 
         //objects
         Accounts acc = new Accounts();
         Tickets ticket = new Tickets();
 
         //menu
-        while (choise!=5 && choise!=4) {
+        boolean finished = false;
+        while (!finished) {
             Misc.clearScreen();
             System.out.println("Choose a option from below: ");
             System.out.println("(1) Create a ticket");
@@ -63,27 +66,29 @@ public class Desk {
             System.out.println("(4) delete the account");
             System.out.println("(5) Log out");
             Misc.prompt("/");
-            choise=Misc.input.nextInt();Misc.input.nextLine();
-            switch (choise) {
+            choice = Misc.input.nextInt();Misc.input.nextLine();
+            switch (choice) {
                 case 1:
                     ticket.createTicket();
-                break;
+                    break;
                 case 2:
                     ticket.recent();
-                break;
+                    break;
                 case 3:
                     ticket.search();
-                break;
+                    break;
                 case 4:
                     acc.deleteAccount();
-                break;
+                    finished = true;
+                    break;
                 case 5:
                     acc.logout();
-                break;
+                    finished = true;
+                    break;
                 default:
-                    System.out.println("'"+choise+"' is not a choise from the main menu... please choose a choise from the menu!!");
+                    System.out.println("'"+choice+"' is not a choice from the main menu... please choose a choice from the menu!!");
                     Misc.sleep(1);
-                break;
+                    break;
             }
         }
 
@@ -93,43 +98,46 @@ public class Desk {
     public void techDesk () {
 
         //variables
-        int choise=0;
+        int choice;
 
         //objects
         Accounts acc = new Accounts();
         Tickets ticket = new Tickets();
 
         //menu
-        while (choise!=5 && choise!=4) {
+        boolean finished = false;
+        while (!finished) {
             Misc.clearScreen();
             System.out.println("Choose a option from below: ");
             System.out.println("(1) Attend recent tickets");
-            System.out.println("(2) search & Attend ticket");
+            System.out.println("(2) Search & Attend ticket");
             System.out.println("(3) Statistics");
-            System.out.println("(4) delete the account");
+            System.out.println("(4) Delete the account");
             System.out.println("(5) Log out");
             Misc.prompt("/");
-            choise=Misc.input.nextInt();Misc.input.nextLine();
-            switch (choise) {
+            choice=Misc.input.nextInt();Misc.input.nextLine();
+            switch (choice) {
                 case 1:
                     ticket.attendRecent();
-                break;
+                    break;
                 case 2:
                     ticket.searchAttend();
-                break;
+                    break;
                 case 3:
                     ticket.statistics();
-                break;
+                    break;
                 case 4:
                     acc.deleteAccount();
-                break;
+                    finished = true;
+                    break;
                 case 5:
                     acc.logout();
-                break;
+                    finished = true;
+                    break;
                 default:
-                    System.out.println("'"+choise+"' is not a choise from the main menu... please choose a choise from the menu!!");
+                    System.out.println("'"+choice+"' is not a choice from the main menu... please choose a choice from the menu!!");
                     Misc.sleep(1);
-                break;
+                    break;
             }
         }
 
