@@ -1,5 +1,3 @@
-
-
 public class Client {
 
     private String designation = null;

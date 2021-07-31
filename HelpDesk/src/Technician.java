@@ -55,12 +55,12 @@ public class Technician {
     //sets the skill and experience of the technician
     public void setSkillAndExp() {
         System.out.print("Skill and experience: ");
-        this.skillAndExp = Misc.input.nextLine();
+        skillAndExp = Misc.input.nextLine();
     }
 
     //gets the skill and experience of the technician
     public String getSkillAndExp () {
-        return this.skillAndExp;
+        return skillAndExp;
     }
 
 }
