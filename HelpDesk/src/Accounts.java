@@ -13,10 +13,6 @@ public class Accounts {
     private String lastName = null;
     private String uName = null;
     private String password = null;
-    private String email = null;
-    private String skillAndExp = null;
-    private String designation = null;
-    private String department = null;
     private String accType = null;
 
     //create a account
@@ -32,6 +28,10 @@ public class Accounts {
         System.out.println("(1) Create a account for client");
         System.out.println("(2) Create a account for technician");
 
+        //objects
+        Client client = new Client();
+        Technician technician = new Technician();
+
         //taking inputs
         boolean finished = false;
         while (!finished) {
@@ -45,11 +45,7 @@ public class Accounts {
                     lastName = Misc.input.nextLine();
                     checkUsername();
                     System.out.print("Email: ");
-                    email = Misc.input.nextLine();
-                    System.out.print("Designation: ");
-                    designation = Misc.input.nextLine();
-                    System.out.print("Department: ");
-                    department = Misc.input.nextLine();
+                    client.createClient();
                     finished = true;
                     break;
                 case 2:
@@ -58,8 +54,7 @@ public class Accounts {
                     System.out.print("Last Name: ");
                     lastName = Misc.input.nextLine();
                     checkUsername();
-                    System.out.print("Skill and experience: ");
-                    skillAndExp = Misc.input.nextLine();
+                    technician.setSkillAndExp();
                     finished = true;
                     break;
                 default:
@@ -96,15 +91,15 @@ public class Accounts {
             if (choice==1) {
                 bWriter.write("Account Type: Client");
                 bWriter.newLine();
-                bWriter.write("Email: "+email);
+                bWriter.write("Email: "+client.getEmail());
                 bWriter.newLine();
-                bWriter.write("Designation: "+designation);
+                bWriter.write("Designation: "+client.getDesignation());
                 bWriter.newLine();
-                bWriter.write("Department: "+department);
+                bWriter.write("Department: "+client.getDepartment());
             } else {
                 bWriter.write("Account Type: Technician");
                 bWriter.newLine();
-                bWriter.write("skill and experience: "+skillAndExp);
+                bWriter.write("skill and experience: "+technician.getSkillAndExp());
             }
             bWriter.close();
             System.out.println("User account sucessfully created");
@@ -137,7 +132,6 @@ public class Accounts {
 
         //objects
         File userFile = new File("Users/"+uName+".txt");
-        Desk desk = new Desk();
 
         //validating user name
         boolean exists = false;
@@ -184,9 +178,9 @@ public class Accounts {
         userName = uName;
 
         if ("Client".equals(accType)) {
-            desk.clientDesk();
+            Client.clientDesk();
         } else {
-            desk.techDesk();
+            Technician.techDesk();
         }
     }
 
