@@ -4,7 +4,7 @@ public class Client {
     private String department = null;
     private String email = null;
 
-    public static void clientDesk() {
+    public void clientDesk() {
 
         //variables
         int choice;

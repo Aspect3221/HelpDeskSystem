@@ -3,7 +3,7 @@ public class Technician {
     private String skillAndExp;
 
 
-    public static void techDesk() {
+    public void techDesk() {
 
         //variables
         int choice;

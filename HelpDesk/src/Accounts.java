@@ -132,6 +132,8 @@ public class Accounts {
 
         //objects
         File userFile = new File("Users/"+uName+".txt");
+        Client client = new Client();
+        Technician technician = new Technician();
 
         //validating user name
         boolean exists = false;
@@ -178,9 +180,9 @@ public class Accounts {
         userName = uName;
 
         if ("Client".equals(accType)) {
-            Client.clientDesk();
+            client.clientDesk();
         } else {
-            Technician.techDesk();
+            technician.techDesk();
         }
     }
 
